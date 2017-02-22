@@ -208,7 +208,7 @@ def main(**kwargs):
         parser.add_argument('apiKey', help='Meraki API Key')
         parser.add_argument('orgId', help='Meraki Organization Id')
         parser.add_argument('-r', '--readMode', help='Pull Network Data into CSV file', action='store_true')
-        parser.add_argument('-u', '--updateMode', help='Update Data from CSV file')
+        parser.add_argument('-u', '--updateMode', help='Update Data from CSV file', action='store_true')
         parser.add_argument('-f', '--file', help='Output File')
         args = parser.parse_args()
 
