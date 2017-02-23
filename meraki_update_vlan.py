@@ -76,8 +76,7 @@ class Organization:
     def get_vlans(self):
         # Obtain vlans for each network
         for network in self.networks:
-            if (network.type == "combined") or (network.type == "appliance"):
-                network.get_vlans()
+            network.get_vlans()
 
         return None
 
@@ -125,13 +124,14 @@ class Network:
         output = json.loads(myJson)
 
         for d in output:
-            myVlan = Vlan()
-            myVlan.id = str(d['id'])
-            myVlan.name = str(d['name'])
-            myVlan.subnet = str(d['subnet'])
-            myVlan.applianceIp = str(d['applianceIp'])
-            myVlan.dnsNameservers = str(d['dnsNameservers']).replace(',','|')
-            self.vlans.append(myVlan)
+            if u'error' not in d:
+                myVlan = Vlan()
+                myVlan.id = str(d['id'])
+                myVlan.name = str(d['name'])
+                myVlan.subnet = str(d['subnet'])
+                myVlan.applianceIp = str(d['applianceIp'])
+                myVlan.dnsNameservers = str(d['dnsNameservers']).replace('\n','|')
+                self.vlans.append(myVlan)
 
         return None
 
