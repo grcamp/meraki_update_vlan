@@ -76,7 +76,7 @@ class Organization:
     def get_vlans(self):
         # Obtain vlans for each network
         for network in self.networks:
-            if network.type != "systems manager":
+            if (network.type == "combined") or ("security" in network.type):
                 network.get_vlans()
 
         return None
@@ -209,7 +209,7 @@ def main(**kwargs):
         parser.add_argument('orgId', help='Meraki Organization Id')
         parser.add_argument('-r', '--readMode', help='Pull Network Data into CSV file', action='store_true')
         parser.add_argument('-u', '--updateMode', help='Update Data from CSV file', action='store_true')
-        parser.add_argument('-f', '--file', help='Output File')
+        parser.add_argument('-o', '--outFile', help='Output File')
         args = parser.parse_args()
 
     headers = {'X-Cisco-Meraki-API-Key': args.apiKey,'Content-Type': 'application/json'}
@@ -220,8 +220,8 @@ def main(**kwargs):
         myOrg.get_networks()
         myOrg.get_vlans()
 
-        logger.info("Writing file %s" % (args.file))
-        file = open(args.file, 'w')
+        logger.info("Writing file %s" % (args.outFile))
+        file = open(args.outFile, 'w')
         file.write("Network Name,Network Id,Network Type,VLAN Id,VLAN Name,Subnet,Appliance IP,DNS\n")
         file.write(myOrg.to_csv_string())
         file.close()
