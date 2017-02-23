@@ -76,7 +76,7 @@ class Organization:
     def get_vlans(self):
         # Obtain vlans for each network
         for network in self.networks:
-            if (network.type == "combined") or ("security" in network.type):
+            if (network.type == "combined") or (network.type == "appliance"):
                 network.get_vlans()
 
         return None
