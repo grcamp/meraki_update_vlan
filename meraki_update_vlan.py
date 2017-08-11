@@ -187,6 +187,24 @@ def get_organization(orgId):
 
     return myOrg
 
+# Method update_vlans
+#
+# Input: None
+# Output: None
+# Parameters: None
+#
+# Return Value: None
+#####################################################################
+def update_vlans(inputFile, org):
+    # Open deviceFile
+    myFile = open(inputFile, 'r')
+    # Read deviceFile into a list
+    lines = [i for i in myFile]
+    # Close device file
+    myFile.close()
+
+#    for line in lines:
+#        if line.strip().split(','):
 
 # Method main
 #
@@ -210,6 +228,7 @@ def main(**kwargs):
         parser.add_argument('-r', '--readMode', help='Pull Network Data into CSV file', action='store_true')
         parser.add_argument('-u', '--updateMode', help='Update Data from CSV file', action='store_true')
         parser.add_argument('-o', '--outFile', help='Output File')
+        parser.add_argument('-i', '--inputFile', help='Input File')
         args = parser.parse_args()
 
     # Comment!!!
@@ -228,7 +247,7 @@ def main(**kwargs):
         file.write(myOrg.to_csv_string())
         file.close()
     elif args.updateMode:
-        return None
+        pass
 
     return None
 
